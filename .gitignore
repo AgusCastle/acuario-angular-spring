@@ -40,10 +40,10 @@ build/
 /bazel-out
 
 # Node
-/node_modules
+/acuario-app/node_modules
 npm-debug.log
 yarn-error.log
-
+*.mjs
 # IDEs and editors
 .idea/
 .project
