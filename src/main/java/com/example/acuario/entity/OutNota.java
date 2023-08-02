@@ -1,5 +1,8 @@
 package com.example.acuario.entity;
 
+import javax.persistence.Entity;
+
+@Entity
 public class OutNota{
     private int cantidad;
     private String description;
