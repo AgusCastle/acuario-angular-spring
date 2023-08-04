@@ -1,9 +1,13 @@
 package com.example.acuario.entity;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name= "outnota")
 public class OutNota{
+    @Id
     private int cantidad;
     private String description;
     private String precio_uni;

@@ -3,6 +3,7 @@ package com.example.acuario.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.acuario.service.NotasService;
 import com.example.acuario.service.PdfService;
 
 import net.sf.jasperreports.engine.JRException;
@@ -25,6 +26,9 @@ public class NotaController {
     @Autowired
     private PdfService pdfService;
 
+    @Autowired
+    private NotasService notasService;
+
     @GetMapping("/pdf")
     public String exportNota() {
         return "Hola mi funcion esta levantada";
@@ -36,7 +40,7 @@ public class NotaController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
         headers.setContentDispositionFormData("report", "report.pdf");
-        return ResponseEntity.ok().headers(headers).body(pdfService.exportPDF());
+        return ResponseEntity.ok().headers(headers).body(pdfService.exportPDF(notasService.encuentraNota()));
     } 
     
     

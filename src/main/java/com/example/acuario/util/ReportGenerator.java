@@ -40,8 +40,8 @@ public class ReportGenerator {
         return JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
     }
 
-    public byte[] exportPDF() throws JRException, FileNotFoundException{
-        List<OutNota> datos = new ArrayList<OutNota>();
+    public byte[] exportPDF(List<OutNota> lista) throws JRException, FileNotFoundException{
+        /*List<OutNota> datos = new ArrayList<OutNota>();
         OutNota d1 = new OutNota(2, "Filtro", "$12,345.50", "12,345.50", "49,382.00");
         OutNota d2 = new OutNota(3, "Mantenimiento marino", "$12,345.50", "12,345.50", "49,382.00");
         OutNota d3 = new OutNota(1, "Agua bidestilla", "$12,345.50", "12,345.50", "49,382.00");
@@ -50,8 +50,8 @@ public class ReportGenerator {
         datos.add(d1);
         datos.add(d2);
         datos.add(d3);
-        datos.add(d4);
+        datos.add(d4);*/
 
-        return JasperExportManager.exportReportToPdf(getReport(datos));
+        return JasperExportManager.exportReportToPdf(getReport(lista));
     }
 }

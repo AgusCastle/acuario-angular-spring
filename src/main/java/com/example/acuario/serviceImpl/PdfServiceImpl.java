@@ -10,6 +10,9 @@ import com.example.acuario.util.ReportGenerator;
 
 import net.sf.jasperreports.engine.JRException;
 
+import java.util.List;
+import com.example.acuario.entity.OutNota;
+
 @Service
 public class PdfServiceImpl implements PdfService{
     
@@ -17,7 +20,7 @@ public class PdfServiceImpl implements PdfService{
     private ReportGenerator reportGenerator;
 
     @Override
-    public byte[] exportPDF() throws JRException, FileNotFoundException{
-        return reportGenerator.exportPDF();
+    public byte[] exportPDF(List<OutNota> lista) throws JRException, FileNotFoundException{
+        return reportGenerator.exportPDF(lista);
     }
 }

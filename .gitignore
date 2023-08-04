@@ -62,13 +62,13 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/acuario-app/.angular/cache
+acuario-app/.angular/*
 .sass-cache/
-/acuario-app/connect.lock
-/acuario-app/coverage
-/acuario-app/libpeerconnection.log
+acuario-app/connect.lock
+acuario-app/coverage
+acuario-app/libpeerconnection.log
 testem.log
-/acuario-app/typings
+acuario-app/typings
 
 # System files
 .DS_Store
