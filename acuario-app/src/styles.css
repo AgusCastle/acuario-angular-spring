@@ -2,3 +2,18 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Calendario estilos si se ponen en su styles se sobreescribe*/
+.fc-day-today .fc-daygrid-day-frame{
+    background-color: rgb(223, 243, 255);
+}
+
+.fc-daygrid-day-number{
+    color: black;
+    text-decoration: none;
+}
+
+.fc-col-header-cell-cushion{
+    color: black;
+    text-decoration: none;
+}

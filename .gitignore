@@ -19,7 +19,7 @@ target/
 *.iml
 *.ipr
 /.mvn
-
+*.json
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
