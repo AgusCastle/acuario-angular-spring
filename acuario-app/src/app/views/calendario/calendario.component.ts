@@ -4,7 +4,10 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Evento } from '../../models/evento';
+import { Trabajos } from '../../models/trabajos';
+import { ModalCrearComponent } from './modal-crear/modal-crear.component';
 
+import { CalendarioService } from '../../service/calendario/calendario.service';
 
 @Component({
   selector: 'app-calendario',
@@ -12,15 +15,16 @@ import { Evento } from '../../models/evento';
   styleUrls: ['./calendario.component.css']
 })
 
-export class CalendarioComponent {
+export class CalendarioComponent implements OnInit{
 
   eventFocus !: Evento;
 
-  @ViewChild('modalCrearEvento') modalCrearEvento!: ElementRef;
   @ViewChild('modalVerEvento') modalVerEvento!: ElementRef;
   @ViewChild('modalEliminarEvento') modalEliminarEvento!: ElementRef;
+
+  listaTrabajos : Trabajos[] = [];
   
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal, private calendarioService: CalendarioService) {}
 
 
   calendarOptions: CalendarOptions = {
@@ -36,7 +40,42 @@ export class CalendarioComponent {
   };
 
   ngOnInit() {
-    this.eventFocus = new Evento('', new Date(), '', [])
+
+    this.calendarioService.obtenerAgenda().subscribe(
+      (data) => {
+        let eventos: any = [];
+        data.forEach((element: any) => {
+
+        let color = 'cornflowerblue';
+        let fontColor = 'white';
+        if (element.env_estado == 0){
+          color = 'red';
+          fontColor = 'white';
+        }else if(element.env_estado == 2){
+          color = 'yellow'
+          fontColor = 'black';
+        }
+
+        let aux :any = {id :element.evn_id, title : element.evn_nom_client, date: new Date(element.env_fecha).toISOString().split('T')[0], color: color, textColor: fontColor};
+        eventos.push(aux);
+        });
+
+        this.calendarOptions.events = eventos;
+      },
+      (error) => {
+        console.error('Error fetching users:', error);
+      }
+    );
+
+    this.calendarioService.obtenerTrabajos().subscribe(
+      (data) => {
+        this.listaTrabajos = data;
+      },
+      (error) => {
+        console.error('Error fetching users:', error);
+      }
+    );
+    this.eventFocus = new Evento(0,'', new Date(), '', [])
   }
 
   previousState() {
@@ -44,7 +83,20 @@ export class CalendarioComponent {
   }
 
   abrirModal(modal: any){
-    this.modalService.open(modal);
+    
+    const modalref = this.modalService.open(modal);
+
+    this.calendarioService.obtenerTrabajos().subscribe(
+      (data) => {
+        this.listaTrabajos = data;
+      },
+      (error) => {
+        console.error('Error fetching users:', error);
+      }
+    );
+
+    modalref.componentInstance.eventFocus = this.eventFocus;
+    modalref.componentInstance.listaTrabajos = this.listaTrabajos;
   }
 
   handleEventClick(arg: any) {
@@ -54,9 +106,9 @@ export class CalendarioComponent {
 
   handleDateClick(arg: any) {
     const clickedDate = arg.date;
-    console.log(arg.date)
-    this.eventFocus = new Evento('', new Date(clickedDate), '', [])
-    this.abrirModal(this.modalCrearEvento)
+    this.eventFocus = new Evento(2, '', new Date(clickedDate), '', []);
+    
+    this.abrirModal(ModalCrearComponent);
   }
 
   formatearFecha(fecha: Date): string {
